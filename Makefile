@@ -1,6 +1,7 @@
 OBJS = src/main.cpp \
+	   src/Engine.cpp \
+	   src/EventManager.cpp \
        src/Window.cpp \
-	   src/Engine.cpp
 
 OBJ_NAME = main
 

@@ -2,9 +2,11 @@
 
 #include "Engine.h"
 #include "Window.h"
+#include "EventManager.h"
 
 Engine::Engine() : _initialised(false),
-                   _mainWindow(nullptr) {
+                   _mainWindow(nullptr),
+                   _eventManager(nullptr) {
 }
 
 Engine::~Engine() {
@@ -23,6 +25,11 @@ bool Engine::init() {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         // Something failed, print error and exit.
         printf("Failed to initialise SDL: %s\n", SDL_GetError());
+        _initialised = false;
+    }
+    _eventManager = std::unique_ptr<EventManager>(new EventManager{});
+    if (_eventManager == nullptr) {
+        printf("Failed to initialise EventManager\n");
         _initialised = false;
     }
 
@@ -51,16 +58,11 @@ bool Engine::mainLoop() {
     SDL_FreeSurface(bg);
 
     int i = 0;
-    bool running = true;
-    while (running) {
-        SDL_Delay(100);
+    while (!_eventManager->_shouldQuit) {
+        _eventManager->pollEvents();
         printf("Tick %d\n", ++i);
-
         render(renderer, i, bgTexture);
-
-        if (i > 10) {
-            running = false;
-        }
+        SDL_Delay(500);
     }
 
     SDL_DestroyTexture(bgTexture);
