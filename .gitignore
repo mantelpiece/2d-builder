@@ -1,2 +1,5 @@
-main
 .*.swp
+
+# Build files
+main
+*.o

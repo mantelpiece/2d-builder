@@ -1,6 +1,4 @@
-#include <SDL2/SDL.h>
-
-#include "Engine.h"
+#include "engine/Engine.h"
 
 int main(int argc, char **argv) {
     Engine engine{};
