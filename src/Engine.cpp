@@ -36,14 +36,46 @@ bool Engine::start() {
     if (!_mainWindow->create()) {
         return false;
     }
+
     printf("Starting main loop...\n");
     return mainLoop();
 }
 
+void render(SDL_Renderer* renderer, int tick, SDL_Texture* bg);
+
 bool Engine::mainLoop() {
-    SDL_Delay(500);
+    SDL_Renderer* renderer = _mainWindow->getRenderer();
+
+    auto bg = SDL_LoadBMP("helloWorld.bmp");
+    auto bgTexture = SDL_CreateTextureFromSurface(renderer, bg);
+    SDL_FreeSurface(bg);
+
+    int i = 0;
+    bool running = true;
+    while (running) {
+        SDL_Delay(100);
+        printf("Tick %d\n", ++i);
+
+        render(renderer, i, bgTexture);
+
+        if (i > 10) {
+            running = false;
+        }
+    }
+
+    SDL_DestroyTexture(bgTexture);
 
     printf("Main loop ended\n");
     return true;
 }
 
+void render(SDL_Renderer* renderer, int tick, SDL_Texture* bg) {
+    SDL_RenderClear(renderer);
+    if (tick % 2 == 0) {
+        SDL_SetRenderDrawColor(renderer, 25, 25, 25, 255);
+        SDL_RenderClear(renderer);
+    } else {
+        SDL_RenderCopy(renderer, bg, NULL, NULL);
+    }
+    SDL_RenderPresent(renderer);
+}
