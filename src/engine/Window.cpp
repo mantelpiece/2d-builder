@@ -8,6 +8,14 @@ Window::Window() {
 Window::Window(const char *title) :
 _title(title) {}
 
+const char* Window::getTitle() {
+    return _title;
+}
+
+SDL_Window* Window::getSDL() {
+    return _window;
+}
+
 bool Window::create() {
     _window = SDL_CreateWindow(
         _title,
@@ -24,24 +32,8 @@ bool Window::create() {
     return true;
 }
 
-SDL_Renderer* Window::getRenderer() {
-    if (_renderer == nullptr) {
-        _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED);
-        if (_renderer == nullptr) {
-            printf("Failed to create SDL renderer: %s\n", SDL_GetError());
-        }
-    }
-    return _renderer;
-}
-
 void Window::destroy() {
-    if (_renderer != nullptr) {
-        SDL_DestroyRenderer(_renderer);
-        _renderer = nullptr;
-        printf("Render for window '%s' destroyed\n", _title);
-    }
-
-    if (_window != nullptr) {
+        if (_window != nullptr) {
         SDL_DestroyWindow(_window);
         _window = nullptr;
         printf("Window destroyed: %s\n", _title);

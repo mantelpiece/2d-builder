@@ -12,7 +12,8 @@ public:
     bool create();
     void destroy();
 
-    SDL_Renderer* getRenderer();
+    const char* getTitle();
+    SDL_Window* getSDL();
 
 private:
     SDL_Window* _window = nullptr;

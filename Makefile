@@ -5,7 +5,9 @@ LIBS= -lSDL2
 
 ENGINE_SRCS = src/engine/Engine.cpp \
 			  src/engine/EventManager.cpp \
-			  src/engine/Window.cpp
+			  src/engine/Window.cpp \
+			  src/engine/RenderSystem.cpp
+
 ENGINE_OBJS = $(ENGINE_SRCS:.cpp=.o)
 
 
@@ -32,6 +34,8 @@ $(MAIN):  $(DIRS) $(ALL_OBJS) # $(ENGINE_OBJS) $(MAIN_OBJ)
 
 obj/%.o: src/%.cpp
 	$(CC) $(CXX_FLAGS) -c $< -o $(@:src=obj)
+
+src/%.cpp: src/%.h
 
 $(DIRS):
 	-mkdir $(DIRS)
