@@ -9,5 +9,11 @@ void EventManager::pollEvents() {
             printf("Exit requested...\n");
             _shouldQuit = true;
         }
+        if (event.type == SDL_KEYUP) {
+            if (event.key.keysym.sym == SDLK_ESCAPE) {
+                printf("Exit requested...\n");
+                _shouldQuit = true;
+            }
+        }
     }
 }
