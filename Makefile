@@ -14,9 +14,12 @@ MAIN = main
 MAIN_SRC = src/main.cpp
 MAIN_OBJ = $(MAIN_SRC:.cpp=.o)
 
-ALL_OBJS = $(MAIN_OBJ) $(ENGINE_OBJS)
+ALL_OBJS_T = $(ENGINE_OBJS) $(MAIN_OBJ)
+ALL_OBJS = $(subst src, obj, $(ALL_OBJS_T))
 
-.PHONY: depend clean
+DIRS = obj obj/engine
+
+.PHONY: depend clean clobber
 
 default: $(MAIN)
 	@echo Built main executable
@@ -24,11 +27,17 @@ default: $(MAIN)
 run: $(MAIN)
 	./main
 
-$(MAIN): $(ENGINE_OBJS) $(MAIN_OBJ)
+$(MAIN):  $(DIRS) $(ALL_OBJS) # $(ENGINE_OBJS) $(MAIN_OBJ)
 	$(CC) $(CXX_FLAGS) -o $(MAIN) $(ALL_OBJS) $(LD_FLAGS) $(LIBS)
 
-.cpp.o:
-	$(CC) $(CXX_FLAGS) -c $< -o $@
+obj/%.o: src/%.cpp
+	$(CC) $(CXX_FLAGS) -c $< -o $(@:src=obj)
+
+$(DIRS):
+	-mkdir $(DIRS)
 
 clean:
-	$(RM) *.o *~ $(MAIN)
+	-$(RM) $(ALL_OBJS)
+
+clobber: clean
+	-$(RM) $(MAIN)
