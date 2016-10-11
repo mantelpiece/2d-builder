@@ -14,28 +14,43 @@ Engine::~Engine() {
 }
 
 void Engine::cleanup() {
-    _mainWindow->destroy();
     printf("Shutting down Engine...\n");
+
+    _renderSystem->cleanUp();
+    _mainWindow->destroy();
+
     SDL_Quit();
     printf("Engine shutdown\n");
 }
 
 bool Engine::init() {
+    auto success = true;
     printf("Initialising engine ... \n");
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         // Something failed, print error and exit.
         printf("Failed to initialise SDL: %s\n", SDL_GetError());
-        _initialised = false;
+        success = false;
     }
+    printf("..initialised SDL subsystem\n");
     _eventManager = std::unique_ptr<EventManager>(new EventManager{});
     if (_eventManager == nullptr) {
-        printf("Failed to initialise EventManager\n");
-        _initialised = false;
+        printf("Failed to initialise event manager\n");
+        success = false;
     }
+    printf("..initialised event manager\n");
 
-    printf("Engine initialised\n");
-    _initialised = true;
-    return _initialised;
+    _renderSystem = std::unique_ptr<RenderSystem>(new RenderSystem{});
+    if (_renderSystem == nullptr) {
+        printf("Failed to initialise render system\n");
+        success = false;
+    }
+    printf("..initialised render system\n");
+
+    if (success) {
+        printf("Engine initialised\n");
+        _initialised = true;
+    }
+    return success;
 }
 
 bool Engine::start() {
@@ -44,6 +59,8 @@ bool Engine::start() {
         return false;
     }
 
+    _renderSystem->init(*_mainWindow);
+
     printf("Starting main loop...\n");
     return mainLoop();
 }
@@ -51,6 +68,7 @@ bool Engine::start() {
 bool Engine::mainLoop() {
     // TODO: Get the RenderSystem
     //       Call renderSystem.preRender();
+    _renderSystem->preRender();
 
     int i = 0;
     while (!_eventManager->_shouldQuit) {
@@ -58,7 +76,7 @@ bool Engine::mainLoop() {
         printf("Tick %d\n", ++i);
 
         // Call render function.
-        // render(i);
+        _renderSystem->render(i);
 
         SDL_Delay(500);
     }

@@ -56,6 +56,6 @@ void RenderSystem::cleanUp() {
     if (_renderer != nullptr) {
         SDL_DestroyRenderer(_renderer);
         _renderer = nullptr;
-        printf("Render for window '%s' destroyed\n", _windowTitle);
+        printf("Render system for window '%s' destroyed\n", _windowTitle);
     }
 }

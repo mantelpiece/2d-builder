@@ -10,7 +10,6 @@ ENGINE_SRCS = src/engine/Engine.cpp \
 
 ENGINE_OBJS = $(ENGINE_SRCS:.cpp=.o)
 
-
 # Main executable
 MAIN = main
 MAIN_SRC = src/main.cpp
@@ -32,10 +31,11 @@ run: $(MAIN)
 $(MAIN):  $(DIRS) $(ALL_OBJS) # $(ENGINE_OBJS) $(MAIN_OBJ)
 	$(CC) $(CXX_FLAGS) -o $(MAIN) $(ALL_OBJS) $(LD_FLAGS) $(LIBS)
 
-obj/%.o: src/%.cpp
-	$(CC) $(CXX_FLAGS) -c $< -o $(@:src=obj)
+obj/%.o: src/%.cpp src/%.h
+	$(CC) $(CXX_FLAGS) -c $< -o $(@)
 
-src/%.cpp: src/%.h
+obj/%.o: src/%.cpp
+	$(CC) $(CXX_FLAGS) -c $< -o $(@)
 
 $(DIRS):
 	-mkdir $(DIRS)
