@@ -1,3 +1,4 @@
+#include <SDL2/SDL_image.h>
 #include <memory>
 
 #include "Engine.h"
@@ -19,6 +20,9 @@ void Engine::cleanup() {
     _renderSystem->cleanUp();
     _mainWindow->destroy();
 
+    // TODO: This doesn't need to happen here -
+    //       it should happen after loading is complete.
+    IMG_Quit();
     SDL_Quit();
     printf("Engine shutdown\n");
 }
@@ -46,6 +50,13 @@ bool Engine::init() {
     }
     printf("..initialised render system\n");
 
+    auto sdlImgFlags = IMG_INIT_PNG;
+    if (IMG_Init(sdlImgFlags) != sdlImgFlags) {
+        printf("Failed to initialise SDL image subsystem :%s\n", IMG_GetError());
+        success = false;
+    }
+    printf("..initialised SDL image subsystem\n");
+
     if (success) {
         printf("Engine initialised\n");
         _initialised = true;
@@ -66,8 +77,6 @@ bool Engine::start() {
 }
 
 bool Engine::mainLoop() const {
-    // TODO: Get the RenderSystem
-    //       Call renderSystem.preRender();
     _renderSystem->preRender();
 
     int i = 0;

@@ -1,3 +1,5 @@
+#include <SDL2/SDL_image.h>
+
 #include "RenderSystem.h"
 
 RenderSystem::RenderSystem() : _renderer(nullptr) {
@@ -29,7 +31,14 @@ bool RenderSystem::preRender() {
     _bgTexture = SDL_CreateTextureFromSurface(_renderer, bg);
     SDL_FreeSurface(bg);
     if (_bgTexture == nullptr) {
-        printf("Failed to initialise texture during pre-render: %s\n", SDL_GetError());
+        printf("Failed to initialise bg texture during pre-render: %s\n", SDL_GetError());
+    }
+
+    auto meeple = IMG_Load("dat/meeple.png");
+    _meepleTexture = SDL_CreateTextureFromSurface(_renderer, meeple);
+    SDL_FreeSurface(meeple);
+    if (_meepleTexture == nullptr) {
+        printf("Failed to initialise meeple texture during pre-render: %s\n", SDL_GetError());
     }
 
     return true;
@@ -47,12 +56,16 @@ void RenderSystem::render(int tick) {
         SDL_RenderCopy(_renderer, _bgTexture, NULL, NULL);
     }
 
+    SDL_Rect dstRect{100, 100, 48, 48};
+    SDL_RenderCopy(_renderer, _meepleTexture, NULL, &dstRect);
+
     // Switch front and back buffers.
     SDL_RenderPresent(_renderer);
 }
 
 void RenderSystem::cleanUp() {
     SDL_DestroyTexture(_bgTexture);
+    SDL_DestroyTexture(_meepleTexture);
     if (_renderer != nullptr) {
         SDL_DestroyRenderer(_renderer);
         _renderer = nullptr;

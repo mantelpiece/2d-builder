@@ -1,7 +1,7 @@
 CC = g++
 CXX_FLAGS = -std=c++11 -Wall
 LD_FLAGS = 
-LIBS= -lSDL2
+LIBS= -lSDL2 -lSDL2_image
 INCLUDES = -Isrc/ -Isrc/engine -Isrc/engine/systems
 
 ENGINE_SRCS = src/engine/Engine.cpp \
