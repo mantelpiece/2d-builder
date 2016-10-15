@@ -2,11 +2,12 @@ CC = g++
 CXX_FLAGS = -std=c++11 -Wall
 LD_FLAGS = 
 LIBS= -lSDL2
+INCLUDES = -Isrc/ -Isrc/engine -Isrc/engine/systems
 
 ENGINE_SRCS = src/engine/Engine.cpp \
 			  src/engine/EventManager.cpp \
 			  src/engine/Window.cpp \
-			  src/engine/RenderSystem.cpp
+			  src/engine/systems/RenderSystem.cpp
 
 ENGINE_OBJS = $(ENGINE_SRCS:.cpp=.o)
 
@@ -18,7 +19,7 @@ MAIN_OBJ = $(MAIN_SRC:.cpp=.o)
 ALL_OBJS_T = $(ENGINE_OBJS) $(MAIN_OBJ)
 ALL_OBJS = $(subst src, obj, $(ALL_OBJS_T))
 
-DIRS = obj obj/engine
+DIRS = obj obj/engine obj/engine/systems
 
 .PHONY: depend clean clobber
 
@@ -32,10 +33,10 @@ $(MAIN):  $(DIRS) $(ALL_OBJS) # $(ENGINE_OBJS) $(MAIN_OBJ)
 	$(CC) $(CXX_FLAGS) -o $(MAIN) $(ALL_OBJS) $(LD_FLAGS) $(LIBS)
 
 obj/%.o: src/%.cpp src/%.h
-	$(CC) $(CXX_FLAGS) -c $< -o $(@)
+	$(CC) $(CXX_FLAGS) $(INCLUDES) -c $< -o $(@)
 
 obj/%.o: src/%.cpp
-	$(CC) $(CXX_FLAGS) -c $< -o $(@)
+	$(CC) $(CXX_FLAGS) $(INCLUDES) -c $< -o $(@)
 
 $(DIRS):
 	-mkdir $(DIRS)
