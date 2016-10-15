@@ -25,7 +25,7 @@ bool RenderSystem::init(Window& window) {
 }
 
 bool RenderSystem::preRender() {
-    auto bg = SDL_LoadBMP("helloWorld.bmp");
+    auto bg = SDL_LoadBMP("dat/helloWorld.bmp");
     _bgTexture = SDL_CreateTextureFromSurface(_renderer, bg);
     SDL_FreeSurface(bg);
     if (_bgTexture == nullptr) {

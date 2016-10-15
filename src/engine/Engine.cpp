@@ -65,7 +65,7 @@ bool Engine::start() {
     return mainLoop();
 }
 
-bool Engine::mainLoop() {
+bool Engine::mainLoop() const {
     // TODO: Get the RenderSystem
     //       Call renderSystem.preRender();
     _renderSystem->preRender();
@@ -73,10 +73,9 @@ bool Engine::mainLoop() {
     int i = 0;
     while (!_eventManager->_shouldQuit) {
         _eventManager->pollEvents();
-        printf("Tick %d\n", ++i);
 
         // Call render function.
-        _renderSystem->render(i);
+        _renderSystem->render(i++);
 
         SDL_Delay(500);
     }

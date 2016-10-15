@@ -22,6 +22,6 @@ public:
     bool start();
 
 private:
-    bool mainLoop();
+    bool mainLoop() const;
     void cleanup();
 };
