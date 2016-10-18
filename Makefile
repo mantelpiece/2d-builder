@@ -6,17 +6,19 @@ INCLUDES = -Isrc/ -Isrc/engine -Isrc/engine/systems
 
 ENGINE_SRCS = src/engine/Engine.cpp \
 			  src/engine/EventManager.cpp \
-			  src/engine/Window.cpp \
-			  src/engine/systems/RenderSystem.cpp
-
+			  src/engine/Window.cpp
 ENGINE_OBJS = $(ENGINE_SRCS:.cpp=.o)
+
+ECS_SRCS = src/engine/systems/EntityManager.cpp \
+		   src/engine/systems/RenderSystem.cpp
+ECS_OBJS = $(ECS_SRCS:.cpp=.o)
 
 # Main executable
 MAIN = main
 MAIN_SRC = src/main.cpp
 MAIN_OBJ = $(MAIN_SRC:.cpp=.o)
 
-ALL_OBJS_T = $(ENGINE_OBJS) $(MAIN_OBJ)
+ALL_OBJS_T = $(ECS_OBJS) $(ENGINE_OBJS) $(MAIN_OBJ)
 ALL_OBJS = $(subst src, obj, $(ALL_OBJS_T))
 
 DIRS = obj obj/engine obj/engine/systems
@@ -29,7 +31,7 @@ default: $(MAIN)
 run: $(MAIN)
 	./main
 
-$(MAIN):  $(DIRS) $(ALL_OBJS) # $(ENGINE_OBJS) $(MAIN_OBJ)
+$(MAIN):  $(DIRS) $(ALL_OBJS)
 	$(CC) $(CXX_FLAGS) -o $(MAIN) $(ALL_OBJS) $(LD_FLAGS) $(LIBS)
 
 obj/%.o: src/%.cpp src/%.h
