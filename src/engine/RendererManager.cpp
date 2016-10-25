@@ -1,17 +1,17 @@
 #include <SDL2/SDL_image.h>
 
-#include "RenderSystem.h"
+#include "RendererManager.h"
 
-RenderSystem::RenderSystem() : _renderer(nullptr) {
+RendererManager::RendererManager() : _renderer(nullptr) {
 }
 
-RenderSystem::~RenderSystem() {
+RendererManager::~RendererManager() {
     if (_renderer != nullptr) {
         cleanUp();
     }
 }
 
-bool RenderSystem::init(Window& window) {
+bool RendererManager::init(Window& window) {
     _windowTitle = window.getTitle();
     SDL_Window* sdlWindow = window.getSDL();
     _renderer = SDL_CreateRenderer(sdlWindow,
@@ -22,11 +22,11 @@ bool RenderSystem::init(Window& window) {
         return false;
     }
 
-    printf("Created RenderSystem for window '%s'\n", _windowTitle);
+    printf("Created renderer manager for window '%s'\n", _windowTitle);
     return true;
 }
 
-bool RenderSystem::preRender() {
+bool RendererManager::preRender() {
     auto bg = SDL_LoadBMP("dat/helloWorld.bmp");
     _bgTexture = SDL_CreateTextureFromSurface(_renderer, bg);
     SDL_FreeSurface(bg);
@@ -44,7 +44,7 @@ bool RenderSystem::preRender() {
     return true;
 }
 
-void RenderSystem::render(int tick) {
+void RendererManager::render(int tick) {
     // Clear back buffer.
     SDL_RenderClear(_renderer);
 
@@ -63,12 +63,12 @@ void RenderSystem::render(int tick) {
     SDL_RenderPresent(_renderer);
 }
 
-void RenderSystem::cleanUp() {
+void RendererManager::cleanUp() {
     SDL_DestroyTexture(_bgTexture);
     SDL_DestroyTexture(_meepleTexture);
     if (_renderer != nullptr) {
         SDL_DestroyRenderer(_renderer);
         _renderer = nullptr;
-        printf("Render system for window '%s' destroyed\n", _windowTitle);
+        printf("Renderer manager for window '%s' destroyed\n", _windowTitle);
     }
 }

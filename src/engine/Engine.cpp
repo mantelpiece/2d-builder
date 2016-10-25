@@ -17,11 +17,12 @@ Engine::~Engine() {
 void Engine::cleanup() {
     printf("Shutting down Engine...\n");
 
-    _renderSystem->cleanUp();
+    _rendererManager->cleanUp();
     _mainWindow->destroy();
 
     // TODO: This doesn't need to happen here -
     //       it should happen after loading is complete.
+    printf("Shutting down IMG subsystem\n");
     IMG_Quit();
     SDL_Quit();
     printf("Engine shutdown\n");
@@ -43,8 +44,8 @@ bool Engine::init() {
     }
     printf("..initialised event manager\n");
 
-    _renderSystem = std::unique_ptr<RenderSystem>(new RenderSystem{});
-    if (_renderSystem == nullptr) {
+    _rendererManager = std::unique_ptr<RendererManager>(new RendererManager{});
+    if (_rendererManager == nullptr) {
         printf("Failed to initialise render system\n");
         success = false;
     }
@@ -70,21 +71,21 @@ bool Engine::start() {
         return false;
     }
 
-    _renderSystem->init(*_mainWindow);
+    _rendererManager->init(*_mainWindow);
 
     printf("Starting main loop...\n");
     return mainLoop();
 }
 
 bool Engine::mainLoop() const {
-    _renderSystem->preRender();
+    _rendererManager->preRender();
 
     int i = 0;
     while (!_eventManager->_shouldQuit) {
         _eventManager->pollEvents();
 
         // Call render function.
-        _renderSystem->render(i++);
+        _rendererManager->render(i++);
 
         SDL_Delay(500);
     }

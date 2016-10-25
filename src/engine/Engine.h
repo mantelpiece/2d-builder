@@ -5,14 +5,14 @@
 
 #include "EventManager.h"
 #include "Window.h"
-#include "systems/RenderSystem.h"
+#include "RendererManager.h"
 
 class Engine {
 private:
     bool _initialised;
     std::unique_ptr<Window> _mainWindow;
     std::unique_ptr<EventManager> _eventManager;
-    std::unique_ptr<RenderSystem> _renderSystem;
+    std::unique_ptr<RendererManager> _rendererManager;
 
 public:
     Engine();

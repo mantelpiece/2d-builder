@@ -6,11 +6,11 @@ INCLUDES = -Isrc/ -Isrc/engine -Isrc/engine/systems
 
 ENGINE_SRCS = src/engine/Engine.cpp \
 			  src/engine/EventManager.cpp \
+			  src/engine/RendererManager.cpp \
 			  src/engine/Window.cpp
 ENGINE_OBJS = $(ENGINE_SRCS:.cpp=.o)
 
-ECS_SRCS = src/engine/systems/EntityManager.cpp \
-		   src/engine/systems/RenderSystem.cpp
+ECS_SRCS = src/engine/systems/EntityManager.cpp
 ECS_OBJS = $(ECS_SRCS:.cpp=.o)
 
 # Main executable

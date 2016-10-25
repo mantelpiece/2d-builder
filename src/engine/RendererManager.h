@@ -4,7 +4,7 @@
 
 #include "Window.h"
 
-class RenderSystem {
+class RendererManager {
 private:
     SDL_Renderer* _renderer;
     const char* _windowTitle = nullptr;
@@ -13,8 +13,8 @@ private:
     SDL_Texture* _meepleTexture = nullptr;
 
 public:
-    RenderSystem();
-    ~RenderSystem();
+    RendererManager();
+    ~RendererManager();
 
     bool init(Window& window);
 
