@@ -37,14 +37,15 @@ bool Engine::init() {
         success = false;
     }
     printf("..initialised SDL subsystem\n");
-    _eventManager = std::unique_ptr<EventManager>(new EventManager{});
+
+    _eventManager = std::make_unique<EventManager>();
     if (_eventManager == nullptr) {
         printf("Failed to initialise event manager\n");
         success = false;
     }
     printf("..initialised event manager\n");
 
-    _rendererManager = std::unique_ptr<RendererManager>(new RendererManager{});
+    _rendererManager = std::make_unique<RendererManager>();
     if (_rendererManager == nullptr) {
         printf("Failed to initialise render system\n");
         success = false;

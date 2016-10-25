@@ -21,5 +21,3 @@ namespace component {
         int height;
     };
 }
-
-
