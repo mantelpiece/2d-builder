@@ -3,9 +3,15 @@
 
 EntityManager::EntityManager() {}
 
-EntityManager::~EntityManager() {}
+EntityManager::~EntityManager() {
+    _positions.clear();
+    _sprites.clear();
+}
 
-unsigned int EntityManager::createEntity() {
-    return _nextId++;
-};
+void EntityManager::deleteEntity(unsigned int uuid) {
+    // TODO: Recycle uuid?
+    // FIXME: Not all entities have all components.
+    removePosition(uuid);
+    removeSprite(uuid);
+}
 
