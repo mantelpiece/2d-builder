@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>136</x>
+      <y>376</y>
+      <w>168</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>Engine
+--
+
+--
+init(): bool
+start(): bool
+
+-mainLoop(): bool
+-cleanup(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>384</x>
+      <y>280</y>
+      <w>168</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>EventManager
+--
+_shouldQuit: bool
+
+--
+pollEvents(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>384</x>
+      <y>424</y>
+      <w>168</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>EventManager
+--
+_shouldQuit: bool
+
+--
+pollEvents(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>128</x>
+      <y>536</y>
+      <w>168</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>Window
+--
+_window: SDL_Window*
+_renderer: SDL_Renderer*
+_title: char*;
+
+--
+create(): bool
+destroy(): void
+
+getTitle(): char*
+getSDL(): SDL_Window*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>296</x>
+      <y>280</y>
+      <w>104</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;190.0;50.0;190.0;50.0;10.0;110.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>296</x>
+      <y>424</y>
+      <w>104</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;110.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>200</x>
+      <y>464</y>
+      <w>24</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1064</x>
+      <y>176</y>
+      <w>168</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>ECS::Component::Sprite
+--
+spriteSheet: SDL_Texture*
+x: double
+y: double
+width: double
+height: double
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1064</x>
+      <y>72</y>
+      <w>168</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>ECS::Component::Position
+--
+x: double
+y: double
+z: double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>632</x>
+      <y>72</y>
+      <w>312</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>ECS::EntityManager
+--
+_positions: map&lt;unsigned int, Position*&gt;
+_sprites: map&lt;unsigned int, Sprite*&gt;
+_nextId: unsigned int
+_renderer: SDL_Renderer*
+
+--
+createEntity(): unsigned int
+deleteEntity(uuid: unsigned int): void
+
+addPosition(uuid, x, y, z): bool
+addSprite(uuid, spriteSheet: char*, int, int, int, int)
+
+getPosition(uuid): Position
+getSprite(uuid): Sprite
+
+removePosition(uuid): void
+removeSprite(uuid): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>936</x>
+      <y>64</y>
+      <w>144</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=-
+&lt;&lt;creates&gt;&gt; &gt;</panel_attributes>
+    <additional_attributes>160.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>936</x>
+      <y>72</y>
+      <w>144</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes>160.0;140.0;130.0;140.0;130.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>744</x>
+      <y>360</y>
+      <w>232</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>SpriteSystem
+--
+_spriteSheets: map&lt;char*, SDL_Texture*&gt;
+
+--
+init(renderer: SDL_Renderer*): bool
+cleanup(): void
+
+render(Position*, Sprite*): bool</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>696</x>
+      <y>264</y>
+      <w>64</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
+</panel_attributes>
+    <additional_attributes>60.0;130.0;10.0;130.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>384</x>
+      <y>552</y>
+      <w>168</w>
+      <h>248</h>
+    </coordinates>
+    <panel_attributes>RendererManager
+--
+_renderer: SDL_Renderer*
+
+--
+init(): bool
+cleanup(): void
+
+preRender(): bool
+render(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>296</x>
+      <y>424</y>
+      <w>104</w>
+      <h>152</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;50.0;10.0;50.0;170.0;110.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1064</x>
+      <y>472</y>
+      <w>176</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>Needs accesss to the SDL_Renderer to a) create textures, and b) render them.
+bg=yellow
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>968</x>
+      <y>416</y>
+      <w>112</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;120.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>296</x>
+      <y>72</y>
+      <w>352</w>
+      <h>376</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;450.0;50.0;450.0;50.0;10.0;420.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>544</x>
+      <y>120</y>
+      <w>104</w>
+      <h>472</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;shares&gt;&gt;</panel_attributes>
+    <additional_attributes>110.0;10.0;60.0;10.0;60.0;570.0;10.0;570.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>384</x>
+      <y>152</y>
+      <w>168</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>LoadManager
+--
+_state: Something
+
+--
+load()
+save()
+lt=.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>296</x>
+      <y>152</y>
+      <w>104</w>
+      <h>296</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;350.0;50.0;350.0;50.0;10.0;110.0;10.0</additional_attributes>
+  </element>
+</diagram>
