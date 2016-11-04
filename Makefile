@@ -10,7 +10,8 @@ ENGINE_SRCS = src/engine/Engine.cpp \
 			  src/engine/Window.cpp
 ENGINE_OBJS = $(ENGINE_SRCS:.cpp=.o)
 
-ECS_SRCS = src/engine/systems/EntityManager.cpp
+ECS_SRCS = src/engine/systems/EntityManager.cpp \
+		   src/engine/systems/SpriteSystem.cpp
 ECS_OBJS = $(ECS_SRCS:.cpp=.o)
 
 # Main executable

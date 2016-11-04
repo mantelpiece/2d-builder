@@ -14,7 +14,7 @@ namespace component {
 
     struct Sprite {
         // const static unsigned int type = 2;
-        std::shared_ptr<SDL_Texture> spriteSheet;
+        SDL_Texture* spriteSheet;
         int x;
         int y;
         int width;
