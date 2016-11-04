@@ -16,7 +16,7 @@ private:
 
 public:
     SpriteSystem();
-    ~SpriteSystem() {};
+    ~SpriteSystem();
 
     bool init(SDL_Renderer* renderer);
     void cleanup();

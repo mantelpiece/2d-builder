@@ -6,5 +6,10 @@ class EventManager {
 public:
     bool _shouldQuit = false;
 public:
+
+    ~EventManager() {
+        printf("..event manager destroyed\n");
+    }
+
     void pollEvents();
 };

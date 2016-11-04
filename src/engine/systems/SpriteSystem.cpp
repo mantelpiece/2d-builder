@@ -6,6 +6,10 @@
 
 SpriteSystem::SpriteSystem() {}
 
+SpriteSystem::~SpriteSystem() {
+    printf("..sprite system destroyed\n");
+}
+
 bool SpriteSystem::init(SDL_Renderer* renderer) {
     _renderer = renderer;
     // TODO: Write some fancy way of working this out.
@@ -28,7 +32,7 @@ void SpriteSystem::cleanup() {
         SDL_DestroyTexture(texture.second);
     }
     _spriteSheets.clear();
-    printf("Shut down Sprite system\n");
+    printf("..shutdown sprite system\n");
 }
 
 bool SpriteSystem::render(Position * const position, Sprite * const sprite) {

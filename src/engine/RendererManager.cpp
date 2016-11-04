@@ -9,6 +9,7 @@ RendererManager::~RendererManager() {
     if (_renderer != nullptr) {
         cleanUp();
     }
+    printf("..renderer manager destroyed\n");
 }
 
 bool RendererManager::init(Window& window) {
@@ -24,6 +25,15 @@ bool RendererManager::init(Window& window) {
 
     printf("Created renderer manager for window '%s'\n", _windowTitle);
     return true;
+}
+
+void RendererManager::cleanUp() {
+    SDL_DestroyTexture(_bgTexture);
+    if (_renderer != nullptr) {
+        SDL_DestroyRenderer(_renderer);
+        _renderer = nullptr;
+        printf("..shutdown renderer manager for window '%s'\n", _windowTitle);
+    }
 }
 
 bool RendererManager::preRender() {
@@ -51,13 +61,4 @@ void RendererManager::render(int tick) {
 
     // Switch front and back buffers.
     SDL_RenderPresent(_renderer);
-}
-
-void RendererManager::cleanUp() {
-    SDL_DestroyTexture(_bgTexture);
-    if (_renderer != nullptr) {
-        SDL_DestroyRenderer(_renderer);
-        _renderer = nullptr;
-        printf("Renderer manager for window '%s' destroyed\n", _windowTitle);
-    }
 }

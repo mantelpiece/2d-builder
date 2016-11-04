@@ -15,14 +15,23 @@ Engine::Engine() : _initialised(false),
 
 Engine::~Engine() {
     cleanup();
+    printf("Engine destroyed\n");
 }
 
 void Engine::cleanup() {
     printf("Shutting down Engine...\n");
 
+    // TODO: Cleanup required for event manager?
+    _eventManager = nullptr;
+
     _entityManager->cleanup();
+    _entityManager = nullptr;
+
     _rendererManager->cleanUp();
+    _rendererManager = nullptr;
+
     _mainWindow->destroy();
+    _mainWindow = nullptr;
 
     // TODO: This doesn't need to happen here -
     //       it should happen after loading is complete.
