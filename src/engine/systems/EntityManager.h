@@ -6,6 +6,7 @@
 #include "SpriteSystem.h"
 
 // Forward declares.
+struct SDL_Renderer;
 struct SDL_Texture;
 
 namespace component {
@@ -15,6 +16,8 @@ namespace component {
 
 class EntityManager {
 private:
+    SDL_Renderer* _renderer;
+
     unsigned int _nextId = 0;
 
     std::map<unsigned int, component::Position*> _positions;
@@ -25,6 +28,9 @@ private:
 public:
     EntityManager();
     ~EntityManager();
+
+    bool init(SDL_Renderer* renderer);
+    void cleanup();
 
     unsigned int createEntity() { return _nextId++; };
     void deleteEntity(unsigned int uuid);

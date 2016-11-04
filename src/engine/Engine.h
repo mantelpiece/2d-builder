@@ -7,12 +7,16 @@
 #include "Window.h"
 #include "RendererManager.h"
 
+// Forward declares
+class EntityManager;
+
 class Engine {
 private:
     bool _initialised;
     std::unique_ptr<Window> _mainWindow;
     std::unique_ptr<EventManager> _eventManager;
     std::unique_ptr<RendererManager> _rendererManager;
+    std::unique_ptr<EntityManager> _entityManager;
 
 public:
     Engine();

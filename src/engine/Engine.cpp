@@ -2,8 +2,11 @@
 #include <memory>
 
 #include "Engine.h"
+
 #include "Window.h"
 #include "EventManager.h"
+#include "RendererManager.h"
+#include "EntityManager.h"
 
 Engine::Engine() : _initialised(false),
                    _mainWindow(nullptr),
@@ -17,6 +20,7 @@ Engine::~Engine() {
 void Engine::cleanup() {
     printf("Shutting down Engine...\n");
 
+    _entityManager->cleanup();
     _rendererManager->cleanUp();
     _mainWindow->destroy();
 
@@ -52,6 +56,13 @@ bool Engine::init() {
     }
     printf("..initialised render system\n");
 
+    _entityManager = std::make_unique<EntityManager>();
+    if (_entityManager == nullptr) {
+        printf("Failed to initialise entity component system\n");
+        success = false;
+    }
+    printf("..initialised entity component system\n");
+
     auto sdlImgFlags = IMG_INIT_PNG;
     if (IMG_Init(sdlImgFlags) != sdlImgFlags) {
         printf("Failed to initialise SDL image subsystem :%s\n", IMG_GetError());
@@ -73,6 +84,7 @@ bool Engine::start() {
     }
 
     _rendererManager->init(*_mainWindow);
+    _entityManager->init(_rendererManager->getRenderer());
 
     printf("Starting main loop...\n");
     return mainLoop();

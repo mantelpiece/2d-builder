@@ -10,13 +10,14 @@ private:
     const char* _windowTitle = nullptr;
 
     SDL_Texture* _bgTexture = nullptr;
-    SDL_Texture* _meepleTexture = nullptr;
 
 public:
     RendererManager();
     ~RendererManager();
 
     bool init(Window& window);
+
+    SDL_Renderer* getRenderer() { return _renderer; };
 
     bool preRender();
     void render(int tick);
