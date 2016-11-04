@@ -3,20 +3,24 @@
 #include <map>
 #include <memory>
 
-#include "Components.h"
-
-// Convenience define.
-#define s_ptr(type) std::shared_ptr<type>
+#include "SpriteSystem.h"
 
 // Forward declares.
 struct SDL_Texture;
+
+namespace component {
+    struct Position;
+    struct Sprite;
+};
 
 class EntityManager {
 private:
     unsigned int _nextId = 0;
 
-    std::map<unsigned int, s_ptr(component::Position)> _positions;
-    std::map<unsigned int, s_ptr(component::Sprite)> _sprites;
+    std::map<unsigned int, component::Position*> _positions;
+    std::map<unsigned int, component::Sprite*> _sprites;
+
+    std::unique_ptr<SpriteSystem> _spriteSystem;
 
 public:
     EntityManager();
@@ -25,15 +29,15 @@ public:
     unsigned int createEntity() { return _nextId++; };
     void deleteEntity(unsigned int uuid);
 
-    bool addPosition(unsigned int uuid);
-    bool addSprite(unsigned int uuid);
+    bool addPosition(unsigned int uuid, double x, double y, double z);
+    bool addSprite(unsigned int uuid, char * const spriteSheet, int x, int y, int width, int height);
 
     /**
      * Returns a const pointer to the Position component for the entity
      * with the given UUID.
      */
     component::Position * const getPosition(unsigned int uuid) const {
-        return _positions.at(uuid).get();
+        return _positions.at(uuid);
     };
 
     /**
@@ -41,7 +45,7 @@ public:
      * with the given UUID.
      */
     component::Sprite * const getSprite(unsigned int uuid) const {
-        return _sprites.at(uuid).get();
+        return _sprites.at(uuid);
     };
 
     void removePosition(unsigned int uuid) {
