@@ -1,8 +1,18 @@
-CC = g++
-CXX_FLAGS = -std=c++14 -Wall
-LD_FLAGS = 
-LIBS= -lSDL2 -lSDL2_image
+CC=
+CXX_FLAGS = -std=c++17 -Wall
+LIBS = -lSDL2 -lSDL2_image
 INCLUDES = -Isrc/ -Isrc/engine -Isrc/engine/systems
+
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	CC=g++
+endif
+ifeq ($(UNAME_S),Darwin)
+	CC=clang++
+	CXX_FLAGS += -stdlib=libc++
+	LIBS += -lc++
+endif
+
 
 ENGINE_SRCS = src/engine/Engine.cpp \
 			  src/engine/EventManager.cpp \
@@ -33,7 +43,7 @@ run: $(MAIN)
 	./main
 
 $(MAIN):  $(DIRS) $(ALL_OBJS)
-	$(CC) $(CXX_FLAGS) -o $(MAIN) $(ALL_OBJS) $(LD_FLAGS) $(LIBS)
+	$(CC) $(CXX_FLAGS) $(LD_FLAGS) $(LIBS) -o $(MAIN) $(ALL_OBJS)
 
 obj/%.o: src/%.cpp src/%.h
 	$(CC) $(CXX_FLAGS) $(INCLUDES) -c $< -o $(@)
